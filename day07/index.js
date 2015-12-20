@@ -9,7 +9,7 @@ var wires = {};
 read.readByLine(__dirname + '/input', process);
 
 function process(line) {
-    if (line !== null) {
+    if ((line !== null) && (line.length > 0)) {
         let splitted = line.split(' -> ');
         
         let wire = acquireWire(splitted[1]);
@@ -38,12 +38,12 @@ function process(line) {
             wire.provide(gate);
         } else {
             if (isNaN(parseInt(splitted[0]))) {
-                wire.provide(parseInt(splitted[0]));
-            } else {
                 wire.provide(acquireWire(splitted[0]));
+            } else {
+                wire.provide(parseInt(splitted[0]));
             }
         }
-    } else {
+    } else if (line === null) {
         console.log(wires);
     }
 }

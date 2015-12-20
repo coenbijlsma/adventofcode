@@ -20,10 +20,15 @@ Wire.prototype.provide = function(source) {
     var self = this;
 
     if (typeof source === 'object') {
-        source.on('data', (data) => {
-            self.signal = data;
-            self.emit('data', data);
-        });
+        if (source.value() !== undefined) {
+            self.signal = source.value();
+            self.emit('data', self.signal);
+        } else {
+            source.on('data', (data) => {
+                self.signal = data;
+                self.emit('data', data);
+            });
+        }
     } else {
         self.signal = source;
         self.emit('data', source);
